@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { LinearGradient } from "expo-linear-gradient";
 import AppLoading from 'expo-app-loading';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { Link } from '@react-navigation/native';
+// import styled from 'rn-css';
 import {
     useFonts,
     Lato_100Thin,
@@ -50,10 +52,13 @@ export default function Main() {
                                     end={{ x: 0.1, y: 0.2 }}
                                 >   
                                 <Key>Temperature</Key>     
+                                
                                 <Value>
-                                    30 
-                                    <MaterialCommunityIcons name="temperature-celsius" size={50} color="white" />
-                                </Value>               
+                                    <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
+                                        30 
+                                        <MaterialCommunityIcons name="temperature-celsius" size={50} color="white" />
+                                    </Link>               
+                                </Value>                    
                                 </LinearGradient>  
                             </ContainerManual>
                         </View>
@@ -64,22 +69,30 @@ export default function Main() {
                                     style={styles.buttonContainer}
                                 >   
                                 <Key>Humidity</Key>
-                                <Value>83 %</Value>                    
+                                <Value>
+                                    <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
+                                        83 %
+                                    </Link>
+                                </Value>                    
                                 </LinearGradient>  
                             </ContainerManual>
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row',}}>
                         <View style={{ flex: 1, }} > 
-                            <ContainerManual>
-                                <LinearGradient
-                                    colors={["#00D092", "#00B17C" ]}
-                                    style={styles.buttonContainer}
-                                >   
-                                <Key>Light</Key>
-                                <Value>On</Value>                    
-                                </LinearGradient>  
-                            </ContainerManual>
+                                <ContainerManual>
+                                    <LinearGradient
+                                        colors={["#00D092", "#00B17C" ]}
+                                        style={styles.buttonContainer}
+                                    >   
+                                    <Key>Light</Key>
+                                    <Value>
+                                        <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
+                                            On
+                                        </Link>
+                                    </Value>                    
+                                    </LinearGradient>  
+                                </ContainerManual>
                         </View>
                         <View style={{ flex: 1, }} > 
                             <ContainerManual>
@@ -108,7 +121,9 @@ export default function Main() {
                                         colors={["#9142FF", "#710CFF"]}
                                         style={styles.buttonCouter}
                                     >   
-                                    <ButtonDevices>Fan</ButtonDevices>                  
+                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                        <ButtonDevices>Fan</ButtonDevices>                  
+                                    </Link>
                                     </LinearGradient>  
                                 </ContainerButton>
                             </View>
@@ -118,7 +133,10 @@ export default function Main() {
                                         colors={["#00D092", "#72AC9A"]}
                                         style={styles.buttonCouter}
                                     >   
-                                    <ButtonDevices>Pump</ButtonDevices>                  
+                                    
+                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                        <ButtonDevices>Pump</ButtonDevices>                  
+                                    </Link>                  
                                     </LinearGradient>  
                                 </ContainerButton>
                             </View>
@@ -130,7 +148,9 @@ export default function Main() {
                                         colors={["#E335DC", "#DBADD9"]}
                                         style={styles.buttonCouter}
                                     >   
-                                    <ButtonDevices>Light</ButtonDevices>                  
+                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                        <ButtonDevices>Light</ButtonDevices>                  
+                                    </Link>                  
                                     </LinearGradient>  
                                 </ContainerButton>
                             </View>
