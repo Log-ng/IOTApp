@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { NavigationContainer } from '@react-navigation/native';
 // import { useState } from 'react';
+import Timer from './Screens/Timer';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +66,7 @@ export default function App() {
             screenOptions={{
               tabBarStyle: {backgroundColor: '#343434',}}} 
             name='Notifications'  
-            component={Main} 
+            component={Timer} 
             options={{
               title: () => null,
               header: () => null, 

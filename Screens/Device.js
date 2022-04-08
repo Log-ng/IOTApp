@@ -6,7 +6,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import AppLoading from 'expo-app-loading';
 import { useFonts,Lato_700Bold } from '@expo-google-fonts/lato';
-
+import Timer from './Timer';
 
 export default function Device() {
     const [isEnabledManual, setIsEnabledMalnual] = useState(false);
@@ -80,7 +80,7 @@ export default function Device() {
                         style={styles.buttonCouter}
                     >
                         <Couter style={{fontFamily: 'Lato_700Bold',}}>
-                            03 : 45 : 01
+                            {isEnabledManual ? <Timer on={isEnabledManual}/>: "00 : 00 : 00"}
                         </Couter>
                     </LinearGradient>
                 </ContainerCounter>
