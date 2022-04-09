@@ -4,61 +4,95 @@ import styled from 'styled-components';
 // import { Shadow } from 'react-native-shadow-2';
 import { LinearGradient } from "expo-linear-gradient";
 import AppLoading from 'expo-app-loading';
-import { useFonts,Lato_700Bold } from '@expo-google-fonts/lato';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { Link } from '@react-navigation/native';
+// import styled from 'rn-css';
+import {
+    useFonts,
+    Lato_100Thin,
+    Lato_100Thin_Italic,
+    Lato_300Light,
+    Lato_300Light_Italic,
+    Lato_400Regular,
+    Lato_400Regular_Italic,
+    Lato_700Bold,
+    Lato_700Bold_Italic,
+    Lato_900Black,
+    Lato_900Black_Italic,
+  } from '@expo-google-fonts/lato';
 
 export default function Main() {
     let [fontsLoaded] = useFonts({
+        Lato_100Thin,
+        Lato_100Thin_Italic,
+        Lato_300Light,
+        Lato_300Light_Italic,
+        Lato_400Regular,
+        Lato_400Regular_Italic,
         Lato_700Bold,
-    });
+        Lato_700Bold_Italic,
+        Lato_900Black,
+        Lato_900Black_Italic,
+      });
     if (!fontsLoaded) {
         return <AppLoading />;
     } else {
         return (
             <View style={{flex: 1, flexDirection: 'column',}}>
-                <View style={{flex: 2,}}>
+                <View style={{flex: 1.2,}}>
                     <Title >My Data</Title>
                 </View>   
                 <Container>
                     <View style={{flex: 1, flexDirection: 'row',}}>
                         <View  style={{ flex: 1, }}> 
-                            <ContainerManual elevation={11} style={{shadowColor: "#000000",
-shadowOffset: {
-	width: 0,
-	height: 7,
-},
-shadowOpacity: 0.43,
-shadowRadius: 9.51,}}>
-                                {/* <LinearGradient
+                            <ContainerManual>
+                                <LinearGradient
                                     colors={["#E335DC", "#F404E9"]}
                                     style={styles.buttonContainer}
                                     end={{ x: 0.1, y: 0.2 }}
-                                >    */}
-                                <Key>Long</Key>                    
-                                {/* </LinearGradient>   */}
+                                >   
+                                <Key>Temperature</Key>     
+                                
+                                <Value>
+                                    <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
+                                        30 
+                                        <MaterialCommunityIcons name="temperature-celsius" size={50} color="white" />
+                                    </Link>               
+                                </Value>                    
+                                </LinearGradient>  
                             </ContainerManual>
                         </View>
                         <View style={{ flex: 1, }} > 
                             <ContainerManual>
                                 <LinearGradient
-                                    colors={["#9142FF", "#710CFF"]}
+                                    colors={["#9142FF", "#A264FA" , "#B992F0"]}
                                     style={styles.buttonContainer}
                                 >   
-                                <Text>Long</Text>                    
+                                <Key>Humidity</Key>
+                                <Value>
+                                    <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
+                                        83 %
+                                    </Link>
+                                </Value>                    
                                 </LinearGradient>  
                             </ContainerManual>
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row',}}>
                         <View style={{ flex: 1, }} > 
-                            <ContainerManual>
-                                <LinearGradient
-                                    colors={["#00D092", "#00B17C" ]}
-                                    style={styles.buttonContainer}
-                                >   
-                                <Text>Long</Text>                    
-                                </LinearGradient>  
-                            </ContainerManual>
+                                <ContainerManual>
+                                    <LinearGradient
+                                        colors={["#00D092", "#00B17C" ]}
+                                        style={styles.buttonContainer}
+                                    >   
+                                    <Key>Light</Key>
+                                    <Value>
+                                        <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
+                                            On
+                                        </Link>
+                                    </Value>                    
+                                    </LinearGradient>  
+                                </ContainerManual>
                         </View>
                         <View style={{ flex: 1, }} > 
                             <ContainerManual>
@@ -66,15 +100,74 @@ shadowRadius: 9.51,}}>
                                     colors={["#4B4848", "#010101"]}
                                     style={styles.buttonContainer}
                                 >   
-                                <Text>Long</Text>                    
+                                <Key>Active</Key>  
+                                <ActiveValue>Fan</ActiveValue>                  
+                                <ActiveValue>Pump</ActiveValue>                  
+                                <ActiveValue>Light</ActiveValue>                  
                                 </LinearGradient>  
                             </ContainerManual>
                         </View>
                     </View>
                 </Container>
-                <View style={{flex: 4,}}>
-                    <Text>Long</Text>
-                </View>
+                <ContainerDevices style={{flex: 2.5, flexDirection: 'column',}}>
+                    <View style={{flex: 1, }}>
+                        <TitleDevices>Devices</TitleDevices>
+                    </View>
+                    <View style={{flex: 4, flexDirection: 'column', paddingTop: 15,}}>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={{flex: 1, }}>
+                                <ContainerButton>
+                                    <LinearGradient
+                                        colors={["#9142FF", "#710CFF"]}
+                                        style={styles.buttonCouter}
+                                    >   
+                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                        <ButtonDevices>Fan</ButtonDevices>                  
+                                    </Link>
+                                    </LinearGradient>  
+                                </ContainerButton>
+                            </View>
+                            <View style={{flex: 1, }}>
+                                <ContainerButton>
+                                    <LinearGradient
+                                        colors={["#00D092", "#72AC9A"]}
+                                        style={styles.buttonCouter}
+                                    >   
+                                    
+                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                        <ButtonDevices>Pump</ButtonDevices>                  
+                                    </Link>                  
+                                    </LinearGradient>  
+                                </ContainerButton>
+                            </View>
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={{flex: 1, }}>
+                                <ContainerButton>
+                                    <LinearGradient
+                                        colors={["#E335DC", "#DBADD9"]}
+                                        style={styles.buttonCouter}
+                                    >   
+                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                        <ButtonDevices>Light</ButtonDevices>                  
+                                    </Link>                  
+                                    </LinearGradient>  
+                                </ContainerButton>
+                            </View>
+                            <View style={{flex: 1, }}>
+                                <ContainerButton>
+                                    <LinearGradient
+                                        colors={["#D44444", "#F20000"]}
+                                        style={styles.buttonCouter}
+                                    >   
+                                    <ButtonDevices>Back</ButtonDevices>                  
+                                    </LinearGradient>  
+                                </ContainerButton>
+                            </View>
+                        </View>
+                        
+                    </View>
+                </ContainerDevices>
             </View>
         );
     }
@@ -91,11 +184,11 @@ const styles = StyleSheet.create({
       padding: 15, 
       alignItems: "flex-start", 
       borderRadius: 20,
-      width: '100%', height: '100%', 
+      width: '100%', height: '98%', 
     },
     buttonCouter: { 
-      padding: 15, 
-      alignItems: "flex-start", 
+      padding: 17, 
+      alignItems: "center", 
       borderRadius: 20,
     },
     buttonText: {
@@ -110,7 +203,7 @@ const Title = styled.Text`
     font-size: 30px;
     font-weight: 700;
     margin-left: 10px;
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 20px;
     letter-spacing: 2px;
 `
@@ -131,11 +224,44 @@ const Key = styled.Text`
     color: white;
     padding: 0px 0px 0px 10px;
     letter-spacing: 2px;    
+    font-family: Lato_400Regular;
+    margin-top: 5px;
 `
 const Value = styled.Text`
+    margin-top: 15px;
     color: white;
     padding: 5px 0px 0px 10px;
     letter-spacing: 2px;
+    font-size: 50px;
+    font-family: Lato_700Bold;
+`
+const ActiveValue = styled.Text`
+    color: #00D092;
+    margin-top: 10px;
+    margin-left: 10px;
+`
+const TitleDevices = styled.Text`
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    margin-left: 10px;
+    /* margin-top: 30px; */
+    /* margin-bottom: 4px; */
+    letter-spacing: 2px;
+`
+const ContainerDevices = styled.View`
+    /* background-color: red; */
+`
+const ContainerButton = styled.View`
+    border-radius: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+`
+const ButtonDevices = styled.Text`
+    color: white;
+    letter-spacing: 1.5px;    
+    font-family: Lato_700Bold;
+    font-weight: 600;
 `
 
 
