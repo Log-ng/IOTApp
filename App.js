@@ -1,97 +1,107 @@
-<<<<<<< HEAD
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import Chart from "./Screens/Chart";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Device from "./Screens/Device";
 import Main from "./Screens/Main";
-=======
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Device from './Screens/Device';
-import Main from './Screens/Main';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons'; 
-import { NavigationContainer } from '@react-navigation/native';
+import Chart from "./Screens/Chart";
+import Notifications from "./Screens/Notifications";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
 // import { useState } from 'react';
-import Timer from './Screens/Timer';
+import Timer from "./Screens/Timer";
 
 const Tab = createBottomTabNavigator();
 
->>>>>>> 26c5db35eb8e22aa3164cd25a49dd79d394da430
 export default function App() {
   // const [tab, setTab] = useState(0);
 
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
-      {/* <Main /> */}
-      {/* <Device /> */}
-      <Chart />
-=======
       <NavigationContainer>
-        <Tab.Navigator 
+        <Tab.Navigator
           screenOptions={{
             // tabBarActiveBackgroundColor: 'red',
-            tabBarStyle: {backgroundColor: '#343434',},
+            tabBarStyle: { backgroundColor: "#343434" },
           }}
-          sceneContainerStyle={{backgroundColor: '#343434'}}
+          sceneContainerStyle={{ backgroundColor: "#343434" }}
         >
-          <Tab.Screen 
-            screenOptions={{tabBarStyle: {backgroundColor: 'red'}}}
-            name='Main' 
-            component={Main} 
+          <Tab.Screen
+            screenOptions={{ tabBarStyle: { backgroundColor: "red" } }}
+            name="Main"
+            component={Main}
             options={{
               title: () => null,
-              header: () => null, 
+              header: () => null,
               tabBarIcon: ({ focused }) => (
-                <Ionicons name="md-apps-outline" size={24} color="white" style={focused ? styles.nav: null}/>
+                <Ionicons
+                  name="md-apps-outline"
+                  size={24}
+                  color="white"
+                  style={focused ? styles.nav : null}
+                />
               ),
             }}
           />
-          <Tab.Screen 
+          <Tab.Screen
             screenOptions={{
-              tabBarStyle: {backgroundColor: '#343434',}}} 
-            name='Device' 
-            component={ Device } 
-            options={{
-              title: () => null,
-              header: () => null, 
-              tabBarIcon: ({ focused }) => (
-                <MaterialIcons name="device-hub" size={24} color="white" style={focused ? styles.nav: null}/>
-              ),
+              tabBarStyle: { backgroundColor: "#343434" },
             }}
-            
-          />
-          <Tab.Screen 
-            screenOptions={{
-              tabBarStyle: {backgroundColor: '#343434',}}} 
-            name='Chart' 
-            component={Main} 
+            name="Device"
+            component={Device}
             options={{
               title: () => null,
-              header: () => null, 
+              header: () => null,
               tabBarIcon: ({ focused }) => (
-                <Ionicons name="bar-chart-outline" size={24} color="white" style={focused ? styles.nav: null}/>
-              )}}
-          />
-          <Tab.Screen 
-            screenOptions={{
-              tabBarStyle: {backgroundColor: '#343434',}}} 
-            name='Notifications'  
-            component={Timer} 
-            options={{
-              title: () => null,
-              header: () => null, 
-              tabBarIcon: ({ focused }) => (
-                <Ionicons name="ios-notifications-outline" size={24} color='white' style={focused ? styles.nav: null}/>
+                <MaterialIcons
+                  name="device-hub"
+                  size={24}
+                  color="white"
+                  style={focused ? styles.nav : null}
+                />
               ),
             }}
           />
-
+          <Tab.Screen
+            screenOptions={{
+              tabBarStyle: { backgroundColor: "#343434" },
+            }}
+            name="Chart"
+            component={Chart}
+            options={{
+              title: () => null,
+              header: () => null,
+              tabBarIcon: ({ focused }) => (
+                <Ionicons
+                  name="bar-chart-outline"
+                  size={24}
+                  color="white"
+                  style={focused ? styles.nav : null}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            screenOptions={{
+              tabBarStyle: { backgroundColor: "#343434" },
+            }}
+            name="Notifications"
+            component={Notifications}
+            options={{
+              title: () => null,
+              header: () => null,
+              tabBarIcon: ({ focused }) => (
+                <Ionicons
+                  name="ios-notifications-outline"
+                  size={24}
+                  color="white"
+                  style={focused ? styles.nav : null}
+                />
+              ),
+            }}
+          />
         </Tab.Navigator>
       </NavigationContainer>
->>>>>>> 26c5db35eb8e22aa3164cd25a49dd79d394da430
     </View>
   );
 }
@@ -99,21 +109,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
     backgroundColor: "#343434",
-=======
-    backgroundColor: '#343434',
->>>>>>> 26c5db35eb8e22aa3164cd25a49dd79d394da430
     // backgroundColor: 'white',
     // alignItems: 'center',
     // justifyContent: 'center',
     color: "white",
   },
   nav: {
-    borderRadius: 16, 
-    backgroundColor: '#E335DC',
+    borderRadius: 16,
+    backgroundColor: "#E335DC",
     padding: 9,
-    borderColor: '#CCCCCC',
+    borderColor: "#CCCCCC",
     borderWidth: 1,
-  }
+  },
 });
