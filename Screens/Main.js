@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 // import { Shadow } from 'react-native-shadow-2';
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,6 +7,7 @@ import AppLoading from 'expo-app-loading';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Link } from '@react-navigation/native';
 // import styled from 'rn-css';
+import axios from 'axios';
 import {
     useFonts,
     Lato_100Thin,
@@ -22,6 +23,25 @@ import {
   } from '@expo-google-fonts/lato';
 
 export default function Main() {
+    const [temp, setTemp] = useState(' ');
+    const [humi, setHumi] = useState(' ');
+    const apis = [
+        "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.humid",
+        "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.temp",
+    ];
+    useEffect(() => {
+        const timer = setInterval(() => {
+            // setTime((prevTime) => prevTime + 1000);
+            axios.all(apis.map((api) => axios.get(api))).then((data) => {
+                setHumi(data[0].data.last_value);
+                setTemp(data[1].data.last_value);
+            })
+        }, 2000);
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
+
     let [fontsLoaded] = useFonts({
         Lato_100Thin,
         Lato_100Thin_Italic,
@@ -55,7 +75,7 @@ export default function Main() {
                                 
                                 <Value>
                                     <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
-                                        30 
+                                        {temp} 
                                         <MaterialCommunityIcons name="temperature-celsius" size={50} color="white" />
                                     </Link>               
                                 </Value>                    
@@ -71,7 +91,7 @@ export default function Main() {
                                 <Key>Humidity</Key>
                                 <Value>
                                     <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
-                                        83 %
+                                        {humi} %
                                     </Link>
                                 </Value>                    
                                 </LinearGradient>  
@@ -121,7 +141,7 @@ export default function Main() {
                                         colors={["#9142FF", "#710CFF"]}
                                         style={styles.buttonCouter}
                                     >   
-                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                    <Link to={{ screen: 'Fan', params: { device: 'Fan' }}}>
                                         <ButtonDevices>Fan</ButtonDevices>                  
                                     </Link>
                                     </LinearGradient>  
@@ -133,10 +153,9 @@ export default function Main() {
                                         colors={["#00D092", "#72AC9A"]}
                                         style={styles.buttonCouter}
                                     >   
-                                    
-                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
-                                        <ButtonDevices>Pump</ButtonDevices>                  
-                                    </Link>                  
+                                        <Link to={{ screen: 'Pump', params: { device: 'Pump' }}}>
+                                            <ButtonDevices>Pump</ButtonDevices>                  
+                                        </Link>                  
                                     </LinearGradient>  
                                 </ContainerButton>
                             </View>
@@ -148,7 +167,7 @@ export default function Main() {
                                         colors={["#E335DC", "#DBADD9"]}
                                         style={styles.buttonCouter}
                                     >   
-                                    <Link to={{ screen: 'Device', params: { id: 'add-then' }}}>
+                                    <Link to={{ screen: 'Light', params: { device: 'Light' }}}>
                                         <ButtonDevices>Light</ButtonDevices>                  
                                     </Link>                  
                                     </LinearGradient>  
@@ -263,6 +282,9 @@ const ButtonDevices = styled.Text`
     font-family: Lato_700Bold;
     font-weight: 600;
 `
+
+
+
 
 
 

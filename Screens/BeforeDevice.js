@@ -1,34 +1,45 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Device from "./Screens/Device";
-import Main from "./Screens/Main";
-import Chart from "./Screens/Chart";
-import Notifications from "./Screens/Notifications";
+import Device from "./Device";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-// import { useState } from 'react';
-import BeforeDevice from "./Screens/BeforeDevice";
+import Select from "./Select";
 const Tab = createBottomTabNavigator();
 
-export default function App() {
-  // const [tab, setTab] = useState(0);
+export default function AfterApp() {
 
   return (
     <View style={styles.container}>
-      <NavigationContainer>
+      {/* <NavigationContainer> */}
         <Tab.Navigator
           screenOptions={{
             // tabBarActiveBackgroundColor: 'red',
-            tabBarStyle: { backgroundColor: "#343434" },
+            tabBarStyle: { backgroundColor: "#343434", display: 'none', },
           }}
           sceneContainerStyle={{ backgroundColor: "#343434" }}
         >
           <Tab.Screen
             screenOptions={{ tabBarStyle: { backgroundColor: "red" } }}
-            name="Main"
-            component={Main}
+            name="Select"
+            component={Select}
+            options={{
+              title: () => null,
+              header: () => null,
+              tabBarIcon: ({ focused }) => (
+                <Ionicons
+                  name="md-apps-outline"
+                  size={24}
+                  color="white"
+                  style={focused ? styles.nav : null}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            screenOptions={{ tabBarStyle: { backgroundColor: "red" } }}
+            name="Fan"
+            component={Device}
             options={{
               title: () => null,
               header: () => null,
@@ -46,8 +57,8 @@ export default function App() {
             screenOptions={{
               tabBarStyle: { backgroundColor: "#343434" },
             }}
-            name="Devices"
-            component={BeforeDevice}
+            name="Pump"
+            component={Device}
             options={{
               title: () => null,
               header: () => null,
@@ -65,8 +76,8 @@ export default function App() {
             screenOptions={{
               tabBarStyle: { backgroundColor: "#343434" },
             }}
-            name="Chart"
-            component={Chart}
+            name="Light"
+            component={Device}
             options={{
               title: () => null,
               header: () => null,
@@ -80,27 +91,8 @@ export default function App() {
               ),
             }}
           />
-          <Tab.Screen
-            screenOptions={{
-              tabBarStyle: { backgroundColor: "#343434" },
-            }}
-            name="Notifications"
-            component={Notifications}
-            options={{
-              title: () => null,
-              header: () => null,
-              tabBarIcon: ({ focused }) => (
-                <Ionicons
-                  name="ios-notifications-outline"
-                  size={24}
-                  color="white"
-                  style={focused ? styles.nav : null}
-                />
-              ),
-            }}
-          />
         </Tab.Navigator>
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
     </View>
   );
 }

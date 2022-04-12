@@ -9,10 +9,10 @@ export default function Timer({ on }) {
     if (on) {
         useEffect(() => {
             const timer = setInterval(() => {
-            setTime((prevTime) => prevTime + 1000);
+                setTime((prevTime) => prevTime + 1000);
             }, 1000);
             return () => {
-            clearInterval(timer);
+                clearInterval(timer);
             };
         }, []);
     }

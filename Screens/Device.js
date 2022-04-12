@@ -8,7 +8,7 @@ import AppLoading from "expo-app-loading";
 import { useFonts, Lato_700Bold } from "@expo-google-fonts/lato";
 import Timer from "./Timer";
 
-export default function Device() {
+export default function Device({route}) {
   const [isEnabledManual, setIsEnabledMalnual] = useState(false);
   const [isEnabledAuto, setIsEnabledAuto] = useState(false);
   const toggleSwitchManual = () =>
@@ -18,13 +18,15 @@ export default function Device() {
   let [fontsLoaded] = useFonts({
     Lato_700Bold,
   });
+  // console.log("test", route.params.device)
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
     return (
       <View>
         <View>
-          <Title>Fan</Title>
+          <Title>{route.params.device}</Title>
+          {/* <Title>FanLong</Title> */}
         </View>
         <ContainerManual>
           {/* <Shadow 
