@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import styled from "styled-components";
 import ToggleSwitch from "toggle-switch-react-native";
-// import { Shadow } from 'react-native-shadow-2';
 import { LinearGradient } from "expo-linear-gradient";
 import AppLoading from "expo-app-loading";
 import { useFonts, Lato_700Bold } from "@expo-google-fonts/lato";
@@ -10,22 +9,24 @@ import Timer from "./Timer";
 
 export default function Device({route}) {
   const [isEnabledManual, setIsEnabledMalnual] = useState(false);
-  const [isEnabledAuto, setIsEnabledAuto] = useState(false);
+  const [isEnabledAuto, setIsEnabledAuto] = useState(route.params.data.auto);
   const toggleSwitchManual = () =>
     setIsEnabledMalnual((previousState) => !previousState);
-  const toggleSwitchAuto = () =>
+  const toggleSwitchAuto = () => {
+    if (!isEnabledAuto && isEnabledManual)toggleSwitchManual();
     setIsEnabledAuto((previousState) => !previousState);
+  }
   let [fontsLoaded] = useFonts({
     Lato_700Bold,
   });
-  // console.log("test", route.params.device)
+  console.log("test", route.params)
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
     return (
       <View>
         <View>
-          <Title>{route.params.device}</Title>
+          <Title>{route.params.data.name}</Title>
           {/* <Title>FanLong</Title> */}
         </View>
         <ContainerManual>
@@ -40,6 +41,7 @@ export default function Device({route}) {
             style={styles.buttonContainer}
           >
             <ToggleSwitch
+              disabled={isEnabledAuto}
               isOn={isEnabledManual}
               onColor="#00D092"
               offColor="#BBBBBB"
@@ -78,10 +80,10 @@ export default function Device({route}) {
             <TurnDevice>Auto turn on device on time</TurnDevice>
             <View>
               <FromTo>
-                From :<ValueFromTo> 8 PM</ValueFromTo>
+                From :<ValueFromTo> {route.params.data.hourFrom} PM</ValueFromTo>
               </FromTo>
               <FromTo>
-                To :<ValueFromTo> 11 PM</ValueFromTo>
+                To :<ValueFromTo> {route.params.data.hourTo} PM</ValueFromTo>
               </FromTo>
             </View>
           </LinearGradient>

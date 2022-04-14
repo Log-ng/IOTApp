@@ -3,16 +3,37 @@ import Device from "./Device";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
 import Select from "./Select";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 const Tab = createBottomTabNavigator();
 
 export default function AfterApp() {
+  const [pump, setPump] = useState({});
+  const [light, setLight] = useState({});
 
+  const apis = [
+    "https://iot-do-an-api.herokuapp.com/device/Pump?fbclid=IwAR00J3Pk9nR136o9uG0Yh2GlDzWfDKoNcyXkG8k5chdjru2cVje7u-atyRY",
+    "https://iot-do-an-api.herokuapp.com/device/Light?fbclid=IwAR00J3Pk9nR136o9uG0Yh2GlDzWfDKoNcyXkG8k5chdjru2cVje7u-atyRY",
+  ];
+  useEffect(() => {
+    axios.get(apis[0]).then((response) => {
+      setPump(response.data);
+            // console.log("Foods..........", response.data);
+        });
+    axios.get(apis[1]).then((response) => {
+      setLight(response.data);
+            // console.log("Foods..........", response.data);
+        });
+  }, []);
+  // console.log("testPump", pump)
+  // console.log("testLight", light)
   return (
     <View style={styles.container}>
       {/* <NavigationContainer> */}
         <Tab.Navigator
+          // initialRouteName="Select"
           screenOptions={{
             // tabBarActiveBackgroundColor: 'red',
             tabBarStyle: { backgroundColor: "#343434", display: 'none', },
@@ -52,6 +73,7 @@ export default function AfterApp() {
                 />
               ),
             }}
+            initialParams={{ data: pump}}
           />
           <Tab.Screen
             screenOptions={{
@@ -71,6 +93,7 @@ export default function AfterApp() {
                 />
               ),
             }}
+            initialParams={{ data: pump}}
           />
           <Tab.Screen
             screenOptions={{
@@ -90,6 +113,7 @@ export default function AfterApp() {
                 />
               ),
             }}
+            initialParams={{ data: light}}
           />
         </Tab.Navigator>
       {/* </NavigationContainer> */}

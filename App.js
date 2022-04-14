@@ -19,6 +19,7 @@ export default function App() {
     <View style={styles.container}>
       <NavigationContainer>
         <Tab.Navigator
+          initialRouteName="Devices"
           screenOptions={{
             // tabBarActiveBackgroundColor: 'red',
             tabBarStyle: { backgroundColor: "#343434" },
