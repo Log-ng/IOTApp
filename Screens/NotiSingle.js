@@ -2,8 +2,16 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import styled from "styled-components";
 import { LinearGradient } from "expo-linear-gradient";
-
-const NotiSingle = ({ text, time }) => {
+import axios from "axios";
+const NotiSingle = ({ id, text, time }) => {
+  const handleDelete = () => {
+    // console.log("Xx");
+    axios
+      .delete(`https://iot-do-an-api.herokuapp.com/noti/${id}`)
+      .then((res) => {
+        console.log(res);
+      });
+  };
   return (
     <ContainerManual>
       <LinearGradient
@@ -18,7 +26,7 @@ const NotiSingle = ({ text, time }) => {
             <TextWhite>{time}</TextWhite>
           </View>
           <View>
-            <TextPurple>Delete</TextPurple>
+            <TextPurple onPress={handleDelete}>Delete</TextPurple>
           </View>
         </View>
       </LinearGradient>
