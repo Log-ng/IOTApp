@@ -23,6 +23,7 @@ export default function App() {
           screenOptions={{
             // tabBarActiveBackgroundColor: 'red',
             tabBarStyle: { backgroundColor: "#343434" },
+            tabBarHideOnKeyboard: true,
           }}
           sceneContainerStyle={{ backgroundColor: "#343434" }}
         >

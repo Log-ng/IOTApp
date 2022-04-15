@@ -25,7 +25,7 @@ const Notifications = () => {
         setNotis(data[0].data);
         // setTemp(data[1].data.last_value);
       });
-    }, 1000);
+    }, 20000);
     return () => {
       clearInterval(timer);
     };
