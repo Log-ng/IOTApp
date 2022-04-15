@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   BarChart,
@@ -11,7 +11,7 @@ import {
 } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
+import axios from "axios";
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
@@ -25,6 +25,26 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 const Chart = () => {
+  const [data, setData] = useState([]);
+  const apis = [
+    "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.temp/data",
+  ];
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // setTime((prevTime) => prevTime + 1000);
+      axios.all(apis.map((api) => axios.get(api))).then((data) => {
+        // console.log(data[0].data);
+        setData(() => {
+          const newData = data[0].data.map((data) => data.value);
+          return newData;
+        });
+        // setTemp(data[1].data.last_value);
+      });
+    }, 5000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
   return (
     <>
       <View>
@@ -33,31 +53,32 @@ const Chart = () => {
       <LineChart
         data={{
           labels: [
-            "Jun 21",
-            "May 21",
-            "Apr 21",
-            "Mar 21",
-            "Feb 21",
-            "Jan 21",
-            "Jun 21",
-            "May 21",
-            "Apr 21",
-            "Mar 21",
-            "Feb 21",
-            "Jan 21",
-            "Jun 21",
-            "May 21",
-            "Apr 21",
-            "Mar 21",
-            "Feb 21",
-            "Jan 21",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
           ], //Array of labels [Jun 21,May 21,Apr 21,Mar 21,Feb 21,Jan 21]
           datasets: [
             {
-              data: [
-                4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5,
-                5, 4.9, 4.8,
-              ], //Array of values
+              // data: [
+              //   4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5,
+              //   5, 4.9, 4.8,
+              // ], //Array of values
+              data: data,
               color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
               strokeWidth: 2, // optional
             },
@@ -74,7 +95,7 @@ const Chart = () => {
           backgroundGradientTo: 0,
           backgroundGradientToOpacity: 0,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           backgroundColor: (opacity = 0) => `rgba(255, 255, 255, ${opacity})`,
           strokeWidth: 2, // optional, default 3
         }}
