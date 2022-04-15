@@ -22,14 +22,24 @@ const Notifications = () => {
       // setTime((prevTime) => prevTime + 1000);
       axios.all(apis.map((api) => axios.get(api))).then((data) => {
         console.log(data[0].data);
-        setNotis(data[0].data);
+        setNotis(data[0].data.reverse());
         // setTemp(data[1].data.last_value);
       });
-    }, 1000);
+    }, 5000);
     return () => {
       clearInterval(timer);
     };
   }, []);
+  const handleDelete = (_id) => {
+    console.log(_id);
+    const newNotis = notis.filter((noti) => noti._id !== _id);
+    axios
+      .delete(`https://iot-do-an-api.herokuapp.com/noti/${_id}`)
+      .then((res) => {
+        console.log(res);
+      });
+    setNotis([...newNotis]);
+  };
   return (
     <View>
       <View>
@@ -37,11 +47,11 @@ const Notifications = () => {
       </View>
       <ScrollView>
         {notis.map((noti, index) => {
-          console.log(typeof noti.date);
           return (
             <NotiSingle
+              handleDelete={handleDelete}
               key={noti._id}
-              id={noti._id}
+              _id={noti._id}
               text={noti.content}
               time={convertDate(noti.date)}
             />

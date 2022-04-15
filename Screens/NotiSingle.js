@@ -3,15 +3,15 @@ import React from "react";
 import styled from "styled-components";
 import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
-const NotiSingle = ({ id, text, time }) => {
-  const handleDelete = () => {
-    // console.log("Xx");
-    axios
-      .delete(`https://iot-do-an-api.herokuapp.com/noti/${id}`)
-      .then((res) => {
-        console.log(res);
-      });
-  };
+const NotiSingle = ({ handleDelete, _id, text, time }) => {
+  // const handleDelete = () => {
+  //   // console.log("Xx");
+  //   axios
+  //     .delete(`https://iot-do-an-api.herokuapp.com/noti/${_id}`)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  // };
   return (
     <ContainerManual>
       <LinearGradient
@@ -26,7 +26,7 @@ const NotiSingle = ({ id, text, time }) => {
             <TextWhite>{time}</TextWhite>
           </View>
           <View>
-            <TextPurple onPress={handleDelete}>Delete</TextPurple>
+            <TextPurple onPress={() => handleDelete(_id)}>Delete</TextPurple>
           </View>
         </View>
       </LinearGradient>
