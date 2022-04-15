@@ -19,15 +19,17 @@ export default function Device({route}) {
   const [fromFixing, setFromFixing] = useState(0);
   const [toFixing, setToFixing] = useState(0);
 
-  const toggleSwitchManual = () =>
+  const toggleSwitchManual = () => {
     setIsEnabledMalnual((previousState) => !previousState);
+  }
   const toggleSwitchAuto = () => {
     if (!isEnabledAuto && isEnabledManual)toggleSwitchManual();
     setIsEnabledAuto((previousState) => !previousState);
+    SetInit(hourFrom, hourTo, !isEnabledAuto);
   }
-  const SetInit = (from, to) => {
+  const SetInit = (from, to , auto) => {
     const sendData = async () => {  
-      await axios.put(`https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`,{auto: isEnabledAuto, hourFrom: from, hourTo: to})
+      await axios.put(`https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`,{auto: auto, hourFrom: from, hourTo: to})
         .then((response) => {
           // setproduct(response.data)
         console.log(response.data);
@@ -175,7 +177,7 @@ export default function Device({route}) {
                 > */}
                     {isFix && <Confirm 
                       title='Save'
-                      onPress={() => SendConfirm(fromFixing, toFixing)}
+                      onPress={() => SendConfirm(fromFixing, toFixing, isEnabledAuto)}
                       // style={{padding: 10,}}
                     />}
                 {/* </LinearGradient> */}
