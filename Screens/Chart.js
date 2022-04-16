@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
@@ -21,6 +22,7 @@ import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import KeyboardAvoidingView from "./KeyboardAvoidingView";
 import axios from "axios";
+import SweetAlert from "react-native-sweet-alert";
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
@@ -34,6 +36,10 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 const Chart = ({ data, hours, tempFrom, setTempFrom, tempTo, setTempTo }) => {
+  const AlterSuccess = () =>
+    Alert.alert("Success", "Update completed value!!!", [
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
   console.log(typeof tempFrom);
   const [text, onChangeText] = useState("Useless Text");
   const [number, onChangeNumber] = useState(11);
@@ -47,6 +53,7 @@ const Chart = ({ data, hours, tempFrom, setTempFrom, tempTo, setTempTo }) => {
         console.log(res);
       });
   };
+
   return (
     <KeyboardAvoidingView>
       <>
@@ -124,6 +131,7 @@ const Chart = ({ data, hours, tempFrom, setTempFrom, tempTo, setTempTo }) => {
                   value={String(tempFrom)}
                   // placeholder="useless placeholder"
                   keyboardType="numeric"
+                  onSubmitEditing={() => AlterSuccess()}
                   maxLength={2}
                 />
                 <Text style={styles.whiteLP}>%</Text>
