@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import NotiSingle from "./NotiSingle";
 import axios from "axios";
 
-const Notifications = () => {
+const Notifications = ({ notis, handleDelete }) => {
   const convertDate = (date) => {
     return (
       date.substring(8, 10) +
@@ -15,31 +15,7 @@ const Notifications = () => {
       date.substring(11, 16)
     );
   };
-  const apis = ["https://iot-do-an-api.herokuapp.com/noti"];
-  const [notis, setNotis] = useState([]);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      // setTime((prevTime) => prevTime + 1000);
-      axios.all(apis.map((api) => axios.get(api))).then((data) => {
-        console.log(data[0].data);
-        setNotis(data[0].data.reverse());
-        // setTemp(data[1].data.last_value);
-      });
-    }, 20000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-  const handleDelete = (_id) => {
-    console.log(_id);
-    const newNotis = notis.filter((noti) => noti._id !== _id);
-    axios
-      .delete(`https://iot-do-an-api.herokuapp.com/noti/${_id}`)
-      .then((res) => {
-        console.log(res);
-      });
-    setNotis([...newNotis]);
-  };
+
   return (
     <View>
       <View>
