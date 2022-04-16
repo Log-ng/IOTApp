@@ -22,7 +22,6 @@ import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import KeyboardAvoidingView from "./KeyboardAvoidingView";
 import axios from "axios";
-import SweetAlert from "react-native-sweet-alert";
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
