@@ -56,7 +56,7 @@ export default function Device({route}) {
       return
     }
     if (from >= to) {
-      Alert.alert('Error !!', '\"From Hour\" must be greater than \"To Hour\"', [{ 
+      Alert.alert('Error !!', '\"To Hour\" must be greater than \"From Hour\"', [{ 
         text: 'Back', 
         // onPress: () => console.log('OK Pressed'),
         // style: 'cancel'
@@ -146,7 +146,7 @@ export default function Device({route}) {
                 onChangeText={setFromFixing}
                 keyboardType="numeric"
                 />}
-              <Text style={{color: "#8c8c8c", paddingTop: 20, letterSpacing: 2,}}>{hourTo <= 12?"AM":"PM"}</Text>
+              <Text style={{color: "#8c8c8c", paddingTop: 20, letterSpacing: 2,}}>{hourFrom <= 12?"AM":"PM"}</Text>
               <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => setIsFix(!isFix)}>
                 <MaterialCommunityIcons name="pencil-box-multiple" size={26} color="#00D092" />
               </FromTo>
