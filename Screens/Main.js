@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link } from '@react-navigation/native';
 // import styled from 'rn-css';
 import axios from 'axios';
+import { Ionicons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import {
     useFonts,
     Lato_100Thin,
@@ -25,6 +27,8 @@ import {
 export default function Main() {
     const [temp, setTemp] = useState(' ');
     const [humi, setHumi] = useState(' ');
+    const [currentDate, setCurrentDate] = useState('');
+
     const apis = [
         "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.humid",
         "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.temp",
@@ -37,6 +41,8 @@ export default function Main() {
                 setTemp(data[1].data.last_value);
             })
         }, 2000);
+        var hours = new Date().getHours();
+        setCurrentDate(hours);
         return () => {
             clearInterval(timer);
         };
@@ -105,10 +111,12 @@ export default function Main() {
                                         colors={["#00D092", "#00B17C" ]}
                                         style={styles.buttonContainer}
                                     >   
-                                    <Key>Light</Key>
+                                    <Key>Day</Key>
                                     <Value>
                                         <Link to={{ screen: 'Chart', params: { id: 'jane' } }}>
-                                            On
+                                            {currentDate > 6 && currentDate < 18 ? 
+                                                <Ionicons name="sunny" size={75} color="white" /> : 
+                                                <FontAwesome5 name="moon" size={75} color="black" />}
                                         </Link>
                                     </Value>                    
                                     </LinearGradient>  
