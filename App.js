@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import Device from "./Screens/Device";
 import Main from "./Screens/Main";
 import Chart from "./Screens/Chart";
@@ -63,14 +69,17 @@ export default function App() {
           tempData.forEach((data, index) => {
             if (data.hours !== tempHour) {
               newData.push(tempData[index - 1].value);
-              newHours.push(tempData[index - 1].hours + "h");
+              let hour = parseInt(tempData[index - 1].hours);
+              hour = hour + 7;
+              if (hour > 24) hour -= 24;
+              newHours.push(String(hour) + "h");
               tempHour = data.hours;
             }
           });
           newData.push(tempData[tempData.length - 1].value);
           newHours.push(tempData[tempData.length - 1].hours + "h");
-          setHours(newHours);
-          return newData;
+          setHours(newHours.reverse());
+          return newData.reverse();
         });
         // setTemp(data[1].data.last_value);
       });
@@ -85,20 +94,21 @@ export default function App() {
   const [tempFrom, setTempFrom] = useState(0);
   const [tempTo, setTempTo] = useState(0);
   useEffect(() => {
-    const timer = setInterval(() => {
-      // setTime((prevTime) => prevTime + 1000);
-      axios.all(apis3.map((api) => axios.get(api))).then((data) => {
-        console.log(data[0].data);
-        setTempFrom(data[0].data.hourFrom);
-        setTempTo(data[0].data.hourTo);
-      });
-    }, 5000);
-    return () => {
-      clearInterval(timer);
-    };
+    // const timer = setInterval(() => {
+    // setTime((prevTime) => prevTime + 1000);
+    axios.all(apis3.map((api) => axios.get(api))).then((data) => {
+      console.log(data[0].data);
+      setTempFrom(data[0].data.hourFrom);
+      setTempTo(data[0].data.hourTo);
+    });
+    // }, 5000);
+    // return () => {
+    //   clearInterval(timer);
+    // };
   }, []);
   return (
     <View style={styles.container}>
+      {/* <ActivityIndicator size="large" /> */}
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName="Devices"
@@ -159,6 +169,7 @@ export default function App() {
                 setTempFrom={setTempFrom}
                 tempTo={tempTo}
                 setTempTo={setTempTo}
+                field="Temp"
               />
             )}
             options={{
@@ -174,6 +185,7 @@ export default function App() {
               ),
             }}
           />
+
           <Tab.Screen
             screenOptions={{
               tabBarStyle: { backgroundColor: "#343434" },

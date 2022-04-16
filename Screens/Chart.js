@@ -34,19 +34,37 @@ const chartConfig = {
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
 };
-const Chart = ({ data, hours, tempFrom, setTempFrom, tempTo, setTempTo }) => {
-  const AlterSuccess = () =>
-    Alert.alert("Success", "Update completed value!!!", [
+const Chart = ({
+  data,
+  hours,
+  tempFrom,
+  setTempFrom,
+  tempTo,
+  setTempTo,
+  field,
+}) => {
+  const AlterSuccess = (text) =>
+    Alert.alert("Success", `Update field ${text} completed !!!`, [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
-  console.log(typeof tempFrom);
-  const [text, onChangeText] = useState("Useless Text");
-  const [number, onChangeNumber] = useState(11);
-  const handleChangeTempFrom = (number) => {
-    setTempFrom(parseInt(number));
+  const [inputTempFrom, setInputTempFrom] = useState(tempFrom);
+  const [inputTempTo, setInputTempTo] = useState(tempTo);
+
+  const handleSubmitTempFrom = () => {
+    AlterSuccess("Lower limit");
     axios
-      .put("https://iot-do-an-api.herokuapp.com/device/Temp", {
-        hourFrom: parseInt(number),
+      .put(`https://iot-do-an-api.herokuapp.com/device/${field}`, {
+        hourFrom: inputTempFrom,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+  const handleSubmitTempTo = () => {
+    AlterSuccess("Upper limit");
+    axios
+      .put(`https://iot-do-an-api.herokuapp.com/device/${field}`, {
+        hourTo: inputTempTo,
       })
       .then((res) => {
         console.log(res);
@@ -54,107 +72,108 @@ const Chart = ({ data, hours, tempFrom, setTempFrom, tempTo, setTempTo }) => {
   };
 
   return (
-    <KeyboardAvoidingView>
-      <>
-        <View>
-          <Title>Chart Temp</Title>
-        </View>
-        <LineChart
-          data={{
-            // labels: [
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            //   "",
-            // ], //Array of labels [Jun 21,May 21,Apr 21,Mar 21,Feb 21,Jan 21]
-            labels: hours,
-            datasets: [
-              {
-                // data: [
-                //   4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5,
-                //   5, 4.9, 4.8,
-                // ], //Array of values
-                data: data,
-                color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-                strokeWidth: 2, // optional
-              },
-            ],
-          }}
-          // width={label.length * 10 + 350}
-          width={screenWidth}
-          height={320}
-          verticalLabelRotation={0}
-          withInnerLines={false}
-          chartConfig={{
-            backgroundGradientFrom: 0,
-            backgroundGradientFromOpacity: 0,
-            backgroundGradientTo: 0,
-            backgroundGradientToOpacity: 0,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            backgroundColor: (opacity = 0) => `rgba(255, 255, 255, ${opacity})`,
-            strokeWidth: 2, // optional, default 3
-          }}
-          bezier // type of line chart
-        />
+    // <KeyboardAvoidingView>
+    <>
+      <View>
+        <Title>Chart Temp</Title>
+      </View>
 
-        <Container>
-          <LinearGradient
-            colors={["#4B4848", "#010101"]}
-            style={styles.buttonContainer}
-          >
-            <TextWhite>Limit</TextWhite>
-            <Text style={styles.whiteSm}>
-              Get notification when temperature too low or too high
-            </Text>
-            <View style={styles.flex}>
-              <Text style={styles.whiteL}>Lower limit</Text>
-              <SafeAreaView>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={(newData) => handleChangeTempFrom(newData)}
-                  value={String(tempFrom)}
-                  // placeholder="useless placeholder"
-                  keyboardType="numeric"
-                  onSubmitEditing={() => AlterSuccess()}
-                  maxLength={2}
-                />
-                <Text style={styles.whiteLP}>%</Text>
-              </SafeAreaView>
-            </View>
-            <View style={styles.flex}>
-              <Text style={styles.whiteL}>Upper limit</Text>
+      <Container>
+        <LinearGradient
+          colors={["#4B4848", "#010101"]}
+          style={styles.buttonContainer}
+        >
+          <TextWhite>Limit</TextWhite>
+          <Text style={styles.whiteSm}>
+            Get notification when temperature too low or too high
+          </Text>
+          <View style={styles.flex}>
+            <Text style={styles.whiteL}>Lower limit</Text>
+            <SafeAreaView>
+              <TextInput
+                style={styles.input}
+                onChangeText={setInputTempFrom}
+                value={String(inputTempFrom)}
+                // placeholder="useless placeholder"
+                keyboardType="numeric"
+                onSubmitEditing={() => handleSubmitTempFrom()}
+                maxLength={2}
+              />
+              <Text style={styles.whiteLP}>%</Text>
+            </SafeAreaView>
+          </View>
+          <View style={styles.flex}>
+            <Text style={styles.whiteL}>Upper limit</Text>
 
-              <SafeAreaView>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={onChangeNumber}
-                  value={String(tempTo)}
-                  // placeholder="useless placeholder"
-                  keyboardType="numeric"
-                  maxLength={2}
-                />
-                <Text style={styles.whiteLP}>%</Text>
-              </SafeAreaView>
-            </View>
-          </LinearGradient>
-        </Container>
-      </>
-    </KeyboardAvoidingView>
+            <SafeAreaView>
+              <TextInput
+                style={styles.input}
+                onChangeText={setInputTempTo}
+                value={String(inputTempTo)}
+                // placeholder="useless placeholder"
+                keyboardType="numeric"
+                onSubmitEditing={() => handleSubmitTempTo()}
+                maxLength={2}
+              />
+              <Text style={styles.whiteLP}>%</Text>
+            </SafeAreaView>
+          </View>
+        </LinearGradient>
+      </Container>
+      <LineChart
+        data={{
+          // labels: [
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          //   "",
+          // ], //Array of labels [Jun 21,May 21,Apr 21,Mar 21,Feb 21,Jan 21]
+          labels: hours,
+          datasets: [
+            {
+              // data: [
+              //   4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5, 5, 4.9, 4.8, 4.3, 4.8, 5,
+              //   5, 4.9, 4.8,
+              // ], //Array of values
+              data: data,
+              color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+              strokeWidth: 2, // optional
+            },
+          ],
+        }}
+        // width={label.length * 10 + 350}
+        width={screenWidth}
+        height={320}
+        verticalLabelRotation={0}
+        withInnerLines={false}
+        chartConfig={{
+          backgroundGradientFrom: 0,
+          backgroundGradientFromOpacity: 0,
+          backgroundGradientTo: 0,
+          backgroundGradientToOpacity: 0,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          backgroundColor: (opacity = 0) => `rgba(255, 255, 255, ${opacity})`,
+          strokeWidth: 2, // optional, default 3
+        }}
+        bezier // type of line chart
+      />
+    </>
+    // </KeyboardAvoidingView>
   );
 };
 
