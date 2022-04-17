@@ -47,16 +47,19 @@ export default function App() {
   };
   // ------------------------------------------------------------------
   // call api chart
-  const [data, setData] = useState([]);
-  const [hours, setHours] = useState([]);
+  const [dataTemp, setDataTemp] = useState([]);
+  const [hoursTemp, setHoursTemp] = useState([]);
+  const [dataHumi, setDataHumi] = useState([]);
+  const [hoursHumi, setHoursHumi] = useState([]);
   const apis2 = [
     "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.temp/data",
+    "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.humid/data",
   ];
   useEffect(() => {
     const timer = setInterval(() => {
       // setTime((prevTime) => prevTime + 1000);
       axios.all(apis2.map((api) => axios.get(api))).then((data) => {
-        setData(() => {
+        setDataTemp(() => {
           const tempData = data[0].data.map((data) => {
             return {
               value: data.value,
@@ -78,9 +81,35 @@ export default function App() {
           });
           newData.push(tempData[tempData.length - 1].value);
           newHours.push(tempData[tempData.length - 1].hours + "h");
-          setHours(newHours.reverse());
+          setHoursTemp(newHours.reverse());
           return newData.reverse();
         });
+        setDataHumi(() => {
+          const tempData = data[1].data.map((data) => {
+            return {
+              value: data.value,
+              hours: data.created_at[11] + data.created_at[12],
+            };
+          });
+          const newData = [];
+          const newHours = [];
+          let tempHour = tempData[1].hours;
+          tempData.forEach((data, index) => {
+            if (data.hours !== tempHour) {
+              newData.push(tempData[index - 1].value);
+              let hour = parseInt(tempData[index - 1].hours);
+              hour = hour + 7;
+              if (hour > 24) hour -= 24;
+              newHours.push(String(hour) + "h");
+              tempHour = data.hours;
+            }
+          });
+          newData.push(tempData[tempData.length - 1].value);
+          newHours.push(tempData[tempData.length - 1].hours + "h");
+          setHoursHumi(newHours.reverse());
+          return newData.reverse();
+        });
+
         // setTemp(data[1].data.last_value);
       });
     }, 5000);
@@ -90,16 +119,23 @@ export default function App() {
   }, []);
   // -------------------------------------
   // handle temp
-  const apis3 = ["https://iot-do-an-api.herokuapp.com/device/Temp"];
+  const apis3 = [
+    "https://iot-do-an-api.herokuapp.com/device/Temp",
+    "https://iot-do-an-api.herokuapp.com/device/Humi",
+  ];
   const [tempFrom, setTempFrom] = useState(0);
   const [tempTo, setTempTo] = useState(0);
+  const [humiFrom, setHumiFrom] = useState(0);
+  const [humiTo, setHumiTo] = useState(0);
   useEffect(() => {
     // const timer = setInterval(() => {
     // setTime((prevTime) => prevTime + 1000);
     axios.all(apis3.map((api) => axios.get(api))).then((data) => {
-      console.log(data[0].data);
+      console.log(data[1]);
       setTempFrom(data[0].data.hourFrom);
       setTempTo(data[0].data.hourTo);
+      setHumiFrom(data[1].data.hourFrom);
+      setHumiTo(data[1].data.hourTo);
     });
     // }, 5000);
     // return () => {
@@ -163,13 +199,14 @@ export default function App() {
             // component={Chart}
             children={() => (
               <Chart
-                data={data}
-                hours={hours}
+                dataTemp={dataTemp}
+                dataHumi={dataHumi}
+                hoursTemp={hoursTemp}
+                hoursHumi={hoursHumi}
                 tempFrom={tempFrom}
-                setTempFrom={setTempFrom}
                 tempTo={tempTo}
-                setTempTo={setTempTo}
-                field="Temp"
+                humiFrom={humiFrom}
+                humiTo={humiTo}
               />
             )}
             options={{
