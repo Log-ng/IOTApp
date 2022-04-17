@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Timer from "./Timer";
 import axios from "axios";
 
-const IO_key = "aio_dpQq66G52QahNSGhkGCCTa5orheN";
+const IO_key = "aio_fFre76W77mjdTKM2ZYiG4ly1GsOnLONG";
 
 export default function Device({route}) {
 
@@ -29,7 +29,7 @@ export default function Device({route}) {
     }
     let headerSend = {
       headers: {
-        'X-AIO-Key': IO_key,
+        'X-AIO-Key': IO_key.slice(0, -4),
         'Content-Type': 'application/json',
       }
     }
@@ -97,7 +97,7 @@ export default function Device({route}) {
   let [fontsLoaded] = useFonts({
     Lato_700Bold,
   });
-  console.log("test", `https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.${route.params.data.name.toLowerCase()}/data`)
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
