@@ -9,6 +9,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Timer from "./Timer";
 import axios from "axios";
 
+const IO_key = "aio_dpQq66G52QahNSGhkGCCTa5orheN";
+
 export default function Device({route}) {
 
   const [isEnabledManual, setIsEnabledMalnual] = useState(false);
@@ -20,7 +22,27 @@ export default function Device({route}) {
   const [toFixing, setToFixing] = useState(0);
 
   const toggleSwitchManual = () => {
+    let valueSend = {
+      datum : {
+        value: isEnabledManual ? "OFF" : "ON"
+      }
+    }
+    let headerSend = {
+      headers: {
+        'X-AIO-Key': IO_key,
+        'Content-Type': 'application/json',
+      }
+    }
+    const sendToDevice = async () => {  
+      await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.${route.params.data.name.toLowerCase()}/data`, valueSend, headerSend)
+        .then((response) => {
+          // setproduct(response.data)
+        console.log(response.data);
+      });
+    }  
+    sendToDevice();
     setIsEnabledMalnual((previousState) => !previousState);
+
   }
   const toggleSwitchAuto = () => {
     if (!isEnabledAuto && isEnabledManual)toggleSwitchManual();
@@ -29,7 +51,7 @@ export default function Device({route}) {
   }
   const SetInit = (from, to , auto) => {
     const sendData = async () => {  
-      await axios.put(`https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`,{auto: auto, hourFrom: from, hourTo: to})
+      await axios.put(`https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`, {auto: auto, hourFrom: from, hourTo: to})
         .then((response) => {
           // setproduct(response.data)
         console.log(response.data);
@@ -75,7 +97,7 @@ export default function Device({route}) {
   let [fontsLoaded] = useFonts({
     Lato_700Bold,
   });
-  // console.log("test", route.params)
+  console.log("test", `https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.${route.params.data.name.toLowerCase()}/data`)
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
