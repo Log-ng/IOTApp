@@ -170,7 +170,7 @@ export default function Device({route}) {
                 />}
               <Text style={{color: "#8c8c8c", paddingTop: 20, letterSpacing: 2,}}>{hourFrom <= 12?"AM":"PM"}</Text>
               <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => setIsFix(!isFix)}>
-                <MaterialCommunityIcons name="pencil-box-multiple" size={26} color="#00D092" />
+                <MaterialCommunityIcons name="pencil-box-multiple" size={26} color={!isFix ? "#00D092" : "#8c8c8c"}/>
               </FromTo>
             </View>
 
@@ -187,7 +187,7 @@ export default function Device({route}) {
                 />}
               <Text style={{color: "#8c8c8c", paddingTop: 20, letterSpacing: 2,}}>{hourTo <= 12?"AM":"PM"}</Text>
               <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => setIsFix(!isFix)}>
-                <MaterialCommunityIcons name="pencil-box-multiple" size={26} color="#00D092" />
+                <MaterialCommunityIcons name="pencil-box-multiple" size={26} color={!isFix ? "#00D092" : "#8c8c8c"} />
               </FromTo>
             </View>
 
