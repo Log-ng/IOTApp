@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, TextInput, Alert, Button  } from "react-native";
+import { StyleSheet, Text, View, TextInput, Alert, Button } from "react-native";
 import { useState } from "react";
 import styled from "styled-components";
 import ToggleSwitch from "toggle-switch-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AppLoading from "expo-app-loading";
 import { useFonts, Lato_700Bold } from "@expo-google-fonts/lato";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Timer from "./Timer";
 import axios from "axios";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -45,8 +45,6 @@ export default function Device({route}) {
   const [hourTo, setHourTo] = useState(route.params.data.hourTo);
   const [isFixFrom, setIsFixFrom] = useState(false);
   const [isFixTo, setIsFixTo] = useState(false);
-  // const [fromFixing, setFromFixing] = useState(0);
-  // const [toFixing, setToFixing] = useState(0);
 
   const toggleSwitchManual = () => {
     let valueSend = {
@@ -56,23 +54,27 @@ export default function Device({route}) {
     }
     let headerSend = {
       headers: {
-        'X-AIO-Key': IO_key.slice(0, -4),
-        'Content-Type': 'application/json',
-      }
-    }
-    const sendToDevice = async () => {  
-      await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.${route.params.data.name.toLowerCase()}/data`, valueSend, headerSend)
+        "X-AIO-Key": IO_key.slice(0, -4),
+        "Content-Type": "application/json",
+      },
+    };
+    const sendToDevice = async () => {
+      await axios
+        .post(
+          `https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.${route.params.data.name.toLowerCase()}/data`,
+          valueSend,
+          headerSend
+        )
         .then((response) => {
           // setproduct(response.data)
-        console.log(response.data);
-      });
-    }  
+          console.log(response.data);
+        });
+    };
     sendToDevice();
     setIsEnabledMalnual((previousState) => !previousState);
-
-  }
+  };
   const toggleSwitchAuto = () => {
-    if (!isEnabledAuto && isEnabledManual)toggleSwitchManual();
+    if (!isEnabledAuto && isEnabledManual) toggleSwitchManual();
     setIsEnabledAuto((previousState) => !previousState);
     
     SetInit(hourFrom, hourTo, !isEnabledAuto);
@@ -83,9 +85,9 @@ export default function Device({route}) {
       await axios.put(`https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`, {auto: auto, hourFrom: from, hourTo: to})
         .then((response) => {
           // setproduct(response.data)
-        console.log(response.data);
-      });
-    }  
+          console.log(response.data);
+        });
+    };
     sendData();
     let valueSend = {
       datum : {
@@ -107,12 +109,8 @@ export default function Device({route}) {
     }  
     sendToDevice(); 
     setShow(false)
-    // setFromFixing(0);
-    // setToFixing(0);
     setIsFixFrom(false);
     setIsFixTo(false);
-    // setHourFrom(from);
-    // setHourTo(to);
   }
   const SendConfirm = (from, to) => {
       Alert.alert('OK !!', 'Completed ', [{ 
@@ -131,9 +129,7 @@ export default function Device({route}) {
     return (
       <View>
         <View>
-        {/* <DatePicker date={date} onDateChange={setDate} /> */}
           <Title>{route.params.data.name}</Title>
-          {/* <Title>FanLong</Title> */}
         </View>
         <ContainerManual>
           <LinearGradient
@@ -178,17 +174,11 @@ export default function Device({route}) {
             />
             <TurnDevice>Auto turn on device on time</TurnDevice>
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: "row" }}>
               <FromTo>
               From :
                 <ValueFromTo> {hourFrom}</ValueFromTo>
               </FromTo>
-              {/* {isFix && <InputFix 
-                numberOfLines={1}
-                placeholderTextColor="#8c8c8c" 
-                onChangeText={setFromFixing}
-                keyboardType="numeric"
-                />} */}
               <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => showTimepicker("From")}>
                 <MaterialCommunityIcons name="pencil-box-multiple" size={26} color={!isFixFrom ? "#00D092" : "#8c8c8c"}/>
               </FromTo>
@@ -207,12 +197,6 @@ export default function Device({route}) {
                 To :
                 <ValueFromTo> {hourTo}</ValueFromTo>
               </FromTo>
-              {/* {isFix && <InputFix 
-                numberOfLines={1}
-                placeholderTextColor="#8c8c8c" 
-                onChangeText={setToFixing}
-                keyboardType="numeric"
-                />} */}
               <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => showTimepicker("To")}>
                 <MaterialCommunityIcons name="pencil-box-multiple" size={26} color={!isFixTo ? "#00D092" : "#8c8c8c"} />
               </FromTo>
@@ -227,11 +211,9 @@ export default function Device({route}) {
               />
             )}
             {<ContainerConfirm>
-                    {/* {(isFixFrom || isFixTo) && <Confirm  */}
                     {show && <Confirm 
                       title='Save'
                       onPress={() => SendConfirm(hourFrom, hourTo, isEnabledAuto)}
-                      // style={{padding: 10,}}
                     />}
             </ContainerConfirm>}
           </LinearGradient>
@@ -278,14 +260,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     letterSpacing: 5,
   },
-  buttonCofirm: { 
-    // padding: 10, 
+  buttonCofirm: {
+    // padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    alignItems: "flex-start", 
+    alignItems: "flex-start",
     borderRadius: 10,
     // paddingLeft: 30,
-},
+  },
 });
 const Title = styled.Text`
   color: white;
@@ -343,7 +325,6 @@ const Confirm = styled.Button`
   font-size: 18px;
   padding-left: 10px;
   padding-right: 10px;
-
 `;
 const ContainerConfirm = styled.View`
   border-radius: 15px;
@@ -353,16 +334,21 @@ const ContainerConfirm = styled.View`
   margin-bottom: 10px;
   margin-top: 10px;
   border-radius: 15px;
-`
+`;
 const InputFix = styled.TextInput`
-  background-color: #4B4848;
+  background-color: #4b4848;
   border-radius: 10px;
+<<<<<<< HEAD
   width: 60px;
   padding-left:12px;
+=======
+  width: 40px;
+  padding-left: 12px;
+>>>>>>> 4eea830288c4b89079b344a30ca5127391f079db
   margin-top: 12px;
   color: white;
   /* height: 80%; */
   /* height: 30px; */
   /* padding-top: 20px; */
   margin-right: 10px;
-`
+`;
