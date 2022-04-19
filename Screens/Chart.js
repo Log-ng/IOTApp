@@ -24,7 +24,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import KeyboardAvoidingView from "./KeyboardAvoidingView";
 import axios from "axios";
 const screenWidth = Dimensions.get("window").width;
-
+const IO_key = "aio_fFre76W77mjdTKM2ZYiG4ly1GsOnLONG";
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
   backgroundGradientFromOpacity: 0,
@@ -45,6 +45,16 @@ const Chart = ({
   humiFrom,
   humiTo,
 }) => {
+  const sendData = () => {
+    const sendToDevice = async () => {  
+      await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
+        .then((response) => {
+          // setproduct(response.data)
+        console.log(response.data);
+      });
+    }  
+    sendToDevice(); 
+  }
   const AlterSuccess = (text) =>
     Alert.alert("Success", `Update field ${text} completed !!!`, [
       { text: "OK", onPress: () => console.log("OK Pressed") },
@@ -63,6 +73,25 @@ const Chart = ({
       .then((res) => {
         console.log(res);
       });
+      let valueSend = {
+        datum : {
+          value: 30,
+        }
+      }
+      let headerSend = {
+        headers: {
+          'X-AIO-Key': IO_key.slice(0, -4),
+          'Content-Type': 'application/json',
+        }
+      }
+      const sendToDevice = async () => {  
+        await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
+          .then((response) => {
+            // setproduct(response.data)
+          console.log(response.data);
+        });
+      }  
+      sendToDevice(); 
   };
   const handleSubmitTempTo = () => {
     AlterSuccess("Upper limit");
@@ -73,6 +102,25 @@ const Chart = ({
       .then((res) => {
         console.log(res);
       });
+      let valueSend = {
+        datum : {
+          value: 30,
+        }
+      }
+      let headerSend = {
+        headers: {
+          'X-AIO-Key': IO_key.slice(0, -4),
+          'Content-Type': 'application/json',
+        }
+      }
+      const sendToDevice = async () => {  
+        await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
+          .then((response) => {
+            // setproduct(response.data)
+          console.log(response.data);
+        });
+      }  
+      sendToDevice();  
   };
   const handleSubmitHumiFrom = () => {
     AlterSuccess("Lower limit");
@@ -83,6 +131,25 @@ const Chart = ({
       .then((res) => {
         console.log(res);
       });
+      let valueSend = {
+        datum : {
+          value: 40,
+        }
+      }
+      let headerSend = {
+        headers: {
+          'X-AIO-Key': IO_key.slice(0, -4),
+          'Content-Type': 'application/json',
+        }
+      }
+      const sendToDevice = async () => {  
+        await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
+          .then((response) => {
+            // setproduct(response.data)
+          console.log(response.data);
+        });
+      }  
+      sendToDevice(); 
   };
   const handleSubmitHumiTo = () => {
     AlterSuccess("Upper limit");
@@ -93,6 +160,25 @@ const Chart = ({
       .then((res) => {
         console.log(res);
       });
+      let valueSend = {
+        datum : {
+          value: 40,
+        }
+      }
+      let headerSend = {
+        headers: {
+          'X-AIO-Key': IO_key.slice(0, -4),
+          'Content-Type': 'application/json',
+        }
+      }
+      const sendToDevice = async () => {  
+        await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
+          .then((response) => {
+            // setproduct(response.data)
+          console.log(response.data);
+        });
+      }  
+      sendToDevice(); 
   };
 
   return (
