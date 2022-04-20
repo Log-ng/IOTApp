@@ -151,7 +151,7 @@ const Chart = ({
             datasets: [
               {
                 data: dataTemp,
-                color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+                color: (opacity = 1) => `rgba(244, 4, 233, ${opacity})`, // optional
                 strokeWidth: 2, // optional
               },
             ],
@@ -191,7 +191,7 @@ const Chart = ({
               <Text style={styles.whiteL}>Lower limit</Text>
               <SafeAreaView>
                 <TextInput
-                  style={styles.input}
+                  style={styles.inputHumi}
                   onChangeText={setInputHumiFrom}
                   value={String(inputHumiFrom)}
                   // placeholder="useless placeholder"
@@ -199,7 +199,7 @@ const Chart = ({
                   onSubmitEditing={() => handleSubmitHumiFrom()}
                   maxLength={2}
                 />
-                <Text style={styles.whiteLP}>%</Text>
+                <Text style={styles.Humi}>%</Text>
               </SafeAreaView>
             </View>
             <View style={styles.flex}>
@@ -207,7 +207,7 @@ const Chart = ({
 
               <SafeAreaView>
                 <TextInput
-                  style={styles.input}
+                  style={styles.inputHumi}
                   onChangeText={setInputHumiTo}
                   value={String(inputHumiTo)}
                   // placeholder="useless placeholder"
@@ -215,7 +215,7 @@ const Chart = ({
                   onSubmitEditing={() => handleSubmitHumiTo()}
                   maxLength={2}
                 />
-                <Text style={styles.whiteLP}>%</Text>
+                <Text style={styles.Humi}>%</Text>
               </SafeAreaView>
             </View>
           </LinearGradient>
@@ -226,7 +226,7 @@ const Chart = ({
             datasets: [
               {
                 data: dataHumi,
-                color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+                color: (opacity = 1) => `rgba(145, 66, 255, ${opacity})`, // optional
                 strokeWidth: 2, // optional
               },
             ],
@@ -293,6 +293,17 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     opacity: 10,
   },
+  inputHumi: {
+    height: 40,
+    margin: 12,
+    // elevation: 0,
+    // padding: 15,
+    width: 30,
+    color: "#9142FF",
+    fontSize: 24,
+    // backgroundColor: "red",
+    opacity: 10,
+  },
   header: {
     marginTop: 40,
     marginLeft: 40,
@@ -317,8 +328,19 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
+  whiteLX: {
+    color: "#9142FF",
+    fontSize: 18,
+  },
   whiteLP: {
     color: "purple",
+    fontSize: 24,
+    position: "absolute",
+    top: 14,
+    right: -10,
+  },
+  Humi: {
+    color: "#9142FF",
     fontSize: 24,
     position: "absolute",
     top: 14,

@@ -39,8 +39,8 @@ const ContainerManual = styled.View`
   margin-left: 10px;
   margin-right: 10px;
   /* border: 1px solid white; */
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 8px;
+  margin-top: 8px;
   border-radius: 15px;
 `;
 const Title = styled.Text`

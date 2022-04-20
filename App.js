@@ -53,7 +53,7 @@ export default function App() {
   const [hoursHumi, setHoursHumi] = useState([]);
   const apis2 = [
     "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.temp/data",
-    "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.humid/data",
+    "https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.humi/data",
   ];
   useEffect(() => {
     const timer = setInterval(() => {
