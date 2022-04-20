@@ -335,20 +335,3 @@ const ContainerConfirm = styled.View`
   margin-top: 10px;
   border-radius: 15px;
 `;
-const InputFix = styled.TextInput`
-  background-color: #4b4848;
-  border-radius: 10px;
-<<<<<<< HEAD
-  width: 60px;
-  padding-left:12px;
-=======
-  width: 40px;
-  padding-left: 12px;
->>>>>>> 4eea830288c4b89079b344a30ca5127391f079db
-  margin-top: 12px;
-  color: white;
-  /* height: 80%; */
-  /* height: 30px; */
-  /* padding-top: 20px; */
-  margin-right: 10px;
-`;
