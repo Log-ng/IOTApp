@@ -47,7 +47,7 @@ export default function Select() {
                 >   
                     <Link to={{ screen: 'Light', params: { device: 'Light' }}}>
                         <ButtonDevices>
-                        <IconDevice name="lightbulb-on-outline" size={25} color="white" />                 Light
+                        <IconDevice name="lightbulb-on-outline" size={25} color="white" />                 Led
                         </ButtonDevices> 
                     </Link>                  
                 </LinearGradient>  

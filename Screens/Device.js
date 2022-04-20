@@ -8,24 +8,50 @@ import { useFonts, Lato_700Bold } from "@expo-google-fonts/lato";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Timer from "./Timer";
 import axios from "axios";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const IO_key = "aio_fFre76W77mjdTKM2ZYiG4ly1GsOnLONG";
 
-export default function Device({ route }) {
+export default function Device({route}) {
+
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [show, setShow] = useState(false);
+
+  const onChangeFrom = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+    setIsFixFrom(!isFixFrom)
+    let hour = Number(currentDate.getHours()) >= 10 ? currentDate.getHours() : "0" + currentDate.getHours();
+    let timeChose = hour + (Number(currentDate.getMinutes() >= 10) ? ":" : ":0") + currentDate.getMinutes();
+    setHourFrom(timeChose);
+  };
+  const onChangeTo = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+    setIsFixTo(!isFixTo)
+    let hour = Number(currentDate.getHours()) >= 10 ? currentDate.getHours() : "0" + currentDate.getHours();
+    let timeChose = hour + (Number(currentDate.getMinutes() >= 10) ? ":" : ":0") + currentDate.getMinutes();
+    setHourTo(timeChose);
+  };
+
+  const showTimepicker = (type) => {
+    type == "To" ? setIsFixTo(!isFixTo) : setIsFixFrom(!isFixFrom);
+    setShow(true)
+  };
+
   const [isEnabledManual, setIsEnabledMalnual] = useState(false);
   const [isEnabledAuto, setIsEnabledAuto] = useState(route.params.data.auto);
   const [hourFrom, setHourFrom] = useState(route.params.data.hourFrom);
   const [hourTo, setHourTo] = useState(route.params.data.hourTo);
-  const [isFix, setIsFix] = useState(false);
-  const [fromFixing, setFromFixing] = useState(0);
-  const [toFixing, setToFixing] = useState(0);
+  const [isFixFrom, setIsFixFrom] = useState(false);
+  const [isFixTo, setIsFixTo] = useState(false);
 
   const toggleSwitchManual = () => {
     let valueSend = {
-      datum: {
+      datum : {
         value: isEnabledManual ? "OFF" : "ON",
-      },
-    };
+      }
+    }
     let headerSend = {
       headers: {
         "X-AIO-Key": IO_key.slice(0, -4),
@@ -50,63 +76,49 @@ export default function Device({ route }) {
   const toggleSwitchAuto = () => {
     if (!isEnabledAuto && isEnabledManual) toggleSwitchManual();
     setIsEnabledAuto((previousState) => !previousState);
+    
     SetInit(hourFrom, hourTo, !isEnabledAuto);
-  };
-  const SetInit = (from, to, auto) => {
-    const sendData = async () => {
-      await axios
-        .put(
-          `https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`,
-          { auto: auto, hourFrom: from, hourTo: to }
-        )
+  }
+  const SetInit = (from, to , auto) => {
+
+    const sendData = async () => {  
+      await axios.put(`https://iot-do-an-api.herokuapp.com/device/${route.params.data.name}`, {auto: auto, hourFrom: from, hourTo: to})
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
         });
     };
     sendData();
-
-    setFromFixing(0);
-    setToFixing(0);
-    setIsFix(false);
-    setHourFrom(from);
-    setHourTo(to);
-  };
+    let valueSend = {
+      datum : {
+        value: route.params.data.name == "Pump" ? 10 : 20,
+      }
+    }
+    let headerSend = {
+      headers: {
+        'X-AIO-Key': IO_key.slice(0, -4),
+        'Content-Type': 'application/json',
+      }
+    }
+    const sendToDevice = async () => {  
+      await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
+        .then((response) => {
+          // setproduct(response.data)
+        console.log(response.data);
+      });
+    }  
+    sendToDevice(); 
+    setShow(false)
+    setIsFixFrom(false);
+    setIsFixTo(false);
+  }
   const SendConfirm = (from, to) => {
-    from = Number(from);
-    to = Number(to);
-    // setIsFix(false)
-    if (from > 24 || from < 1 || to > 24 || to < 1) {
-      Alert.alert("Error !!", "The value must be in 1 - 24", [
-        {
-          text: "Back",
-          // onPress: () => console.log('OK Pressed'),
-          // style: 'cancel'
-        },
-      ]);
-      return;
-    }
-    if (from >= to) {
-      Alert.alert("Error !!", '"To Hour" must be greater than "From Hour"', [
-        {
-          text: "Back",
-          // onPress: () => console.log('OK Pressed'),
-          // style: 'cancel'
-        },
-      ]);
-      return;
-    } else {
-      from <= to
-        ? Alert.alert("OK !!", "Completed ", [
-            {
-              text: "Ok",
-              onPress: () => SetInit(from, to),
-              styles: { borderRadius: 10 },
-            },
-          ])
-        : null;
-    }
-  };
+      Alert.alert('OK !!', 'Completed ', [{ 
+        text: 'Ok', 
+        onPress: () => SetInit(from, to),
+        styles: {borderRadius: 10}
+      }]);
+  }
   let [fontsLoaded] = useFonts({
     Lato_700Bold,
   });
@@ -118,15 +130,8 @@ export default function Device({ route }) {
       <View>
         <View>
           <Title>{route.params.data.name}</Title>
-          {/* <Title>FanLong</Title> */}
         </View>
         <ContainerManual>
-          {/* <Shadow 
-                    viewStyle={{marginLeft: 12,}} 
-                    distance={1} startColor={'#343434'} 
-                    finalColor={'#404040'} 
-                    offset={[19, 0]}
-                > */}
           <LinearGradient
             colors={["#4B4848", "#010101"]}
             style={styles.buttonContainer}
@@ -147,7 +152,6 @@ export default function Device({ route }) {
               onToggle={toggleSwitchManual}
             />
           </LinearGradient>
-          {/* </Shadow> */}
         </ContainerManual>
         <ContainerManual>
           <LinearGradient
@@ -172,81 +176,46 @@ export default function Device({ route }) {
 
             <View style={{ flexDirection: "row" }}>
               <FromTo>
-                From :{!isFix && <ValueFromTo> {hourFrom}</ValueFromTo>}
+              From :
+                <ValueFromTo> {hourFrom}</ValueFromTo>
               </FromTo>
-              {isFix && (
-                <InputFix
-                  numberOfLines={1}
-                  placeholderTextColor="#8c8c8c"
-                  onChangeText={setFromFixing}
-                  keyboardType="numeric"
-                />
-              )}
-              <Text
-                style={{ color: "#8c8c8c", paddingTop: 20, letterSpacing: 2 }}
-              >
-                {hourFrom <= 12 ? "AM" : "PM"}
-              </Text>
-              <FromTo
-                style={{ flex: 1, textAlign: "right" }}
-                onPress={() => setIsFix(!isFix)}
-              >
-                <MaterialCommunityIcons
-                  name="pencil-box-multiple"
-                  size={26}
-                  color={!isFix ? "#00D092" : "#8c8c8c"}
-                />
+              <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => showTimepicker("From")}>
+                <MaterialCommunityIcons name="pencil-box-multiple" size={26} color={!isFixFrom ? "#00D092" : "#8c8c8c"}/>
               </FromTo>
             </View>
-
-            <View style={{ flexDirection: "row" }}>
+            {isFixFrom && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode='time'
+                is24Hour={true}
+                onChange={onChangeFrom}
+              />
+            )}
+            <View style={{flexDirection: 'row'}}>
               <FromTo>
-                To :{!isFix && <ValueFromTo> {hourTo}</ValueFromTo>}
+                To :
+                <ValueFromTo> {hourTo}</ValueFromTo>
               </FromTo>
-              {isFix && (
-                <InputFix
-                  numberOfLines={1}
-                  placeholderTextColor="#8c8c8c"
-                  onChangeText={setToFixing}
-                  keyboardType="numeric"
-                />
-              )}
-              <Text
-                style={{ color: "#8c8c8c", paddingTop: 20, letterSpacing: 2 }}
-              >
-                {hourTo <= 12 ? "AM" : "PM"}
-              </Text>
-              <FromTo
-                style={{ flex: 1, textAlign: "right" }}
-                onPress={() => setIsFix(!isFix)}
-              >
-                <MaterialCommunityIcons
-                  name="pencil-box-multiple"
-                  size={26}
-                  color={!isFix ? "#00D092" : "#8c8c8c"}
-                />
+              <FromTo style={{ flex: 1, textAlign: 'right', }} onPress={() => showTimepicker("To")}>
+                <MaterialCommunityIcons name="pencil-box-multiple" size={26} color={!isFixTo ? "#00D092" : "#8c8c8c"} />
               </FromTo>
             </View>
-
-            {
-              <ContainerConfirm>
-                {/* <LinearGradient
-                    colors={["#6886E0", "#1B53FB"]}
-                    style={styles.buttonCofirm}
-                    
-                > */}
-                {isFix && (
-                  <Confirm
-                    title="Save"
-                    onPress={() =>
-                      SendConfirm(fromFixing, toFixing, isEnabledAuto)
-                    }
-                    // style={{padding: 10,}}
-                  />
-                )}
-                {/* </LinearGradient> */}
-              </ContainerConfirm>
-            }
+            {isFixTo && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode='time'
+                is24Hour={true}
+                onChange={onChangeTo}
+              />
+            )}
+            {<ContainerConfirm>
+                    {show && <Confirm 
+                      title='Save'
+                      onPress={() => SendConfirm(hourFrom, hourTo, isEnabledAuto)}
+                    />}
+            </ContainerConfirm>}
           </LinearGradient>
         </ContainerManual>
         <ContainerCounter>
@@ -365,16 +334,4 @@ const ContainerConfirm = styled.View`
   margin-bottom: 10px;
   margin-top: 10px;
   border-radius: 15px;
-`;
-const InputFix = styled.TextInput`
-  background-color: #4b4848;
-  border-radius: 10px;
-  width: 40px;
-  padding-left: 12px;
-  margin-top: 12px;
-  color: white;
-  /* height: 80%; */
-  /* height: 30px; */
-  /* padding-top: 20px; */
-  margin-right: 10px;
 `;

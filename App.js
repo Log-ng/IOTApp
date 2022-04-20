@@ -269,3 +269,56 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+// import DateTimePicker from '@react-native-community/datetimepicker';
+// import {
+//   StyleSheet,
+//   Text,
+//   View,
+//   TouchableOpacity,
+//   ActivityIndicator, Button
+// } from "react-native";
+// import { useState, useEffect } from 'react'
+// export default function App() {
+//   const [date, setDate] = useState(new Date(1598051730000));
+//   const [mode, setMode] = useState('date');
+//   const [show, setShow] = useState(false);
+//   const [time, setTime] = useState("");
+//   const onChange = (event, selectedDate) => {
+//     const currentDate = selectedDate;
+//     setShow(false);
+//     setDate(currentDate);
+//     setTime(currentDate.getHours() + ":" + currentDate.getMinutes())
+//   };
+
+//   const showMode = (currentMode) => {
+//     setShow(true);
+//     setMode(currentMode);
+//   };
+
+//   const showDatepicker = () => {
+//     showMode('date');
+//   };
+
+//   const showTimepicker = () => {
+//     showMode('time');
+//   };
+
+//   return (
+//     <View style={{marginTop: 30,}}>
+//       <View>
+//         <Button onPress={showTimepicker} title="Show time picker!" />
+//       </View>
+//       {console.log(date)}
+//       <Text>selected: {time}</Text>
+//       {show && (
+//         <DateTimePicker
+//           testID="dateTimePicker"
+//           value={date}
+//           mode='time'
+//           is24Hour={true}
+//           onChange={onChange}
+//         />
+//       )}
+//     </View>
+//   );
+// }
