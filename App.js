@@ -62,7 +62,7 @@ export default function App() {
         setDataTemp(() => {
           const tempData = data[0].data.map((data) => {
             return {
-              value: data.value,
+              value: Number(data.value),
               hours: data.created_at[11] + data.created_at[12],
             };
           });
@@ -87,7 +87,7 @@ export default function App() {
         setDataHumi(() => {
           const tempData = data[1].data.map((data) => {
             return {
-              value: data.value,
+              value: Number(data.value),
               hours: data.created_at[11] + data.created_at[12],
             };
           });
@@ -107,6 +107,7 @@ export default function App() {
           newData.push(tempData[tempData.length - 1].value);
           newHours.push(tempData[tempData.length - 1].hours + "h");
           setHoursHumi(newHours.reverse());
+          console.log("???", newData.reverse());
           return newData.reverse();
         });
 
