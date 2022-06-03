@@ -24,7 +24,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import KeyboardAvoidingView from "./KeyboardAvoidingView";
 import axios from "axios";
 const screenWidth = Dimensions.get("window").width;
-const IO_key = "aio_fFre76W77mjdTKM2ZYiG4ly1GsOnLONG";
+const IO_key = "aio_maqp63aXm1ngURGGKgx3RWOKpELJLONG";
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
   backgroundGradientFromOpacity: 0,
@@ -56,7 +56,10 @@ const Chart = ({
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
-        });
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     };
     sendToDevice();
   };
@@ -99,7 +102,10 @@ const Chart = ({
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
-        });
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     };
     sendToDevice();
   };
@@ -111,7 +117,10 @@ const Chart = ({
       })
       .then((res) => {
         console.log(res);
-      });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     let valueSend = {
       datum: {
         value: 30,
@@ -133,7 +142,12 @@ const Chart = ({
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
-        });
+          console.log("testttttttt->>>>>>>>>>>>>>>>>>>>>>>>");
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     };
     sendToDevice();
   };
@@ -145,7 +159,10 @@ const Chart = ({
       })
       .then((res) => {
         console.log(res);
-      });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     let valueSend = {
       datum: {
         value: 40,
@@ -167,7 +184,10 @@ const Chart = ({
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
-        });
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     };
     sendToDevice();
   };
@@ -179,7 +199,10 @@ const Chart = ({
       })
       .then((res) => {
         console.log(res);
-      });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     let valueSend = {
       datum: {
         value: 40,
@@ -201,7 +224,10 @@ const Chart = ({
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
-        });
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     };
     sendToDevice();
   };
