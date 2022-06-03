@@ -35,13 +35,13 @@ const NotiSingle = ({ handleDelete, _id, text, time }) => {
 };
 
 const ContainerManual = styled.View`
-  border-radius: 15px;
+  border-radius: 20px;
   margin-left: 10px;
   margin-right: 10px;
   /* border: 1px solid white; */
   margin-bottom: 8px;
   margin-top: 8px;
-  border-radius: 15px;
+  border-radius: 20px;
 `;
 const Title = styled.Text`
   color: white;

@@ -10,7 +10,7 @@ import Timer from "./Timer";
 import axios from "axios";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const IO_key = "aio_fFre76W77mjdTKM2ZYiG4ly1GsOnLONG";
+const IO_key = "aio_maqp63aXm1ngURGGKgx3RWOKpELJLONG";
 
 export default function Device({route}) {
 
@@ -68,7 +68,10 @@ export default function Device({route}) {
         .then((response) => {
           // setproduct(response.data)
           console.log(response.data);
-        });
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     };
     sendToDevice();
     setIsEnabledMalnual((previousState) => !previousState);
@@ -104,8 +107,12 @@ export default function Device({route}) {
       await axios.post(`https://io.adafruit.com/api/v2/an_ngdinh/feeds/demo.update/data`, valueSend, headerSend)
         .then((response) => {
           // setproduct(response.data)
-        console.log(response.data);
-      });
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
     }  
     sendToDevice(); 
     setShow(false)
