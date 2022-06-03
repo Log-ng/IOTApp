@@ -55,11 +55,11 @@ const Chart = ({
         )
         .then((response) => {
           // setproduct(response.data)
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function (error) {
-          console.log(error);
-        })
+          // console.log(error);
+        });
     };
     sendToDevice();
   };
@@ -79,7 +79,7 @@ const Chart = ({
         hourFrom: inputTempFrom,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       });
     let valueSend = {
       datum: {
@@ -101,11 +101,11 @@ const Chart = ({
         )
         .then((response) => {
           // setproduct(response.data)
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function (error) {
-          console.log(error);
-        })
+          // console.log(error);
+        });
     };
     sendToDevice();
   };
@@ -116,11 +116,11 @@ const Chart = ({
         hourTo: inputTempTo,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
     let valueSend = {
       datum: {
         value: 30,
@@ -141,13 +141,12 @@ const Chart = ({
         )
         .then((response) => {
           // setproduct(response.data)
-          console.log(response.data);
-          console.log("testttttttt->>>>>>>>>>>>>>>>>>>>>>>>");
-
+          // console.log(response.data);
+          // console.log("testttttttt->>>>>>>>>>>>>>>>>>>>>>>>");
         })
         .catch(function (error) {
           console.log(error);
-        })
+        });
     };
     sendToDevice();
   };
@@ -162,7 +161,7 @@ const Chart = ({
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
     let valueSend = {
       datum: {
         value: 40,
@@ -187,7 +186,7 @@ const Chart = ({
         })
         .catch(function (error) {
           console.log(error);
-        })
+        });
     };
     sendToDevice();
   };
@@ -202,7 +201,7 @@ const Chart = ({
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
     let valueSend = {
       datum: {
         value: 40,
@@ -227,7 +226,7 @@ const Chart = ({
         })
         .catch(function (error) {
           console.log(error);
-        })
+        });
     };
     sendToDevice();
   };

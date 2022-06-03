@@ -91,9 +91,10 @@ export default function App() {
               hours: data.created_at[11] + data.created_at[12],
             };
           });
+          console.log("x", tempData);
           const newData = [];
           const newHours = [];
-          let tempHour = tempData[1].hours;
+          let tempHour = tempData[0].hours;
           tempData.forEach((data, index) => {
             if (data.hours !== tempHour) {
               newData.push(tempData[index - 1].value);
@@ -107,7 +108,7 @@ export default function App() {
           newData.push(tempData[tempData.length - 1].value);
           newHours.push(tempData[tempData.length - 1].hours + "h");
           setHoursHumi(newHours.reverse());
-          console.log("???", newData.reverse());
+          // console.log("???", newData.reverse());
           return newData.reverse();
         });
 
@@ -132,7 +133,7 @@ export default function App() {
     // const timer = setInterval(() => {
     // setTime((prevTime) => prevTime + 1000);
     axios.all(apis3.map((api) => axios.get(api))).then((data) => {
-      console.log(data[1]);
+      // console.log(data[1]);
       setTempFrom(data[0].data.hourFrom);
       setTempTo(data[0].data.hourTo);
       setHumiFrom(data[1].data.hourFrom);
