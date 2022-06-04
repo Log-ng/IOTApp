@@ -260,7 +260,7 @@ const Chart = ({
                   onSubmitEditing={() => handleSubmitTempFrom()}
                   maxLength={2}
                 />
-                <Text style={styles.whiteLP}>%</Text>
+                <Text style={styles.whiteLP}>°C</Text>
               </SafeAreaView>
             </View>
             <View style={styles.flex}>
@@ -276,7 +276,7 @@ const Chart = ({
                   onSubmitEditing={() => handleSubmitTempTo()}
                   maxLength={2}
                 />
-                <Text style={styles.whiteLP}>%</Text>
+                <Text style={styles.whiteLP}>°C </Text>
               </SafeAreaView>
             </View>
           </LinearGradient>
@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 14,
     right: -10,
+    marginLeft:11
   },
   Humi: {
     color: "#9142FF",

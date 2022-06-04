@@ -91,7 +91,7 @@ export default function App() {
               hours: data.created_at[11] + data.created_at[12],
             };
           });
-          console.log("x", tempData);
+          // console.log("x", tempData);
           const newData = [];
           const newHours = [];
           let tempHour = tempData[0].hours;

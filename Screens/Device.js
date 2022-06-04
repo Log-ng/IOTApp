@@ -18,6 +18,11 @@ export default function Device({route}) {
   const [show, setShow] = useState(false);
 
   const onChangeFrom = (event, selectedDate) => {
+    if (event.type === 'dismissed') {
+      setDate(date);
+      console.log("test->>>>>>>")
+      return;
+    }
     const currentDate = selectedDate;
     setDate(currentDate);
     setIsFixFrom(!isFixFrom)
@@ -26,6 +31,11 @@ export default function Device({route}) {
     setHourFrom(timeChose);
   };
   const onChangeTo = (event, selectedDate) => {
+    if (event.type === 'dismissed') {
+      setDate(date);
+      console.log("test->>>>>>>")
+      return;
+    }
     const currentDate = selectedDate;
     setDate(currentDate);
     setIsFixTo(!isFixTo)
@@ -129,7 +139,7 @@ export default function Device({route}) {
   let [fontsLoaded] = useFonts({
     Lato_700Bold,
   });
-
+  // const test = () => {console.log("long")}
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -197,6 +207,7 @@ export default function Device({route}) {
                 mode='time'
                 is24Hour={true}
                 onChange={onChangeFrom}
+                // onTouchCancel={test}
               />
             )}
             <View style={{flexDirection: 'row'}}>
